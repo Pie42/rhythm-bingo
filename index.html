@@ -21,6 +21,7 @@
                 .fill(0)
                 .map(() => Array(size).fill(NaN)),
             picts = [...Array(33).keys()];
+        document.title = 'Rhythm Bingo!';
         for (var i in board) {
             for (var j in board[i]) {
                 let k = picts.splice((Math.random() * picts.length) | 0, 1),
