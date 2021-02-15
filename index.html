@@ -1,15 +1,25 @@
 <body>
+    <style>
+        table, td, th{
+            border: 1px solid black;
+            font-size: 200px
+        }
+        table.center{
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
     <script>
-        var size = 4,
+        var size = 5,
             board = Array(size)
                 .fill(0)
-                .map((i) => Array(size).fill(NaN)),
+                .map(() => Array(size).fill(NaN)),
             canvases = Array(size)
                 .fill(0)
-                .map((i) => Array(size).fill(NaN)),
+                .map(() => Array(size).fill(NaN)),
             states = Array(size)
                 .fill(0)
-                .map((i) => Array(size).fill(NaN)),
+                .map(() => Array(size).fill(NaN)),
             picts = [...Array(33).keys()];
         for (var i in board) {
             for (var j in board[i]) {
@@ -48,13 +58,19 @@
             }
         }
         var table = document.createElement('table');
-        table.style = 'border: 1px solid black';
+        table.classList.add('center');
+        let tr = document.createElement('tr');
+        for (var i of 'BINGO'.split('').slice(0, size)) {
+            let th = document.createElement('th');
+            th.innerHTML = i;
+            tr.appendChild(th);
+        }
+        table.appendChild(tr);
         for (var i in canvases) {
             let tr = document.createElement('tr');
             for (var j in canvases[i]) {
                 let td = document.createElement('td');
                 td.height = 200;
-                td.style = 'border: 1px solid black';
                 td.appendChild(canvases[i][j]);
                 tr.appendChild(td);
             }
