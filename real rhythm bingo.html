@@ -1,0 +1,65 @@
+<body>
+    <script>
+        var size = 4,
+            board = Array(size)
+                .fill(0)
+                .map((i) => Array(size).fill(NaN)),
+            canvases = Array(size)
+                .fill(0)
+                .map((i) => Array(size).fill(NaN)),
+            states = Array(size)
+                .fill(0)
+                .map((i) => Array(size).fill(NaN)),
+            picts = [...Array(33).keys()];
+        for (var i in board) {
+            for (var j in board[i]) {
+                let k = picts.splice((Math.random() * picts.length) | 0, 1),
+                    l = document.createElement('img'),
+                    m = document.createElement('canvas');
+                l.src = k + '.png';
+                m.i = i;
+                m.j = j;
+                m.addEventListener('click', (event) => {
+                    let p = event.target;
+                    console.log('hi', p);
+                    states[p.i][p.j] = !states[p.i][p.j];
+                    let ctx = p.getContext('2d');
+                    ctx.clearRect(0, 0, p.width, p.height);
+                    ctx.drawImage(board[p.i][p.j], 0, (p.height - board[p.i][p.j].height) / 2);
+                    if (states[p.i][p.j]) {
+                        //ctx.fillStyle = '#ff0000';
+                        ctx.globalAlpha = 0.5;
+                        /*ctx.lineWidth = 20;
+                        ctx.moveTo(20, p.height / 2);
+                        ctx.lineTo(p.width - 20, p.height / 2);
+                        ctx.stroke();*/
+                        ctx.fillRect(0, 0, p.width, p.height)
+                        ctx.globalAlpha = 1;
+                    }
+                });
+                board[i][j] = l;
+                canvases[i][j] = m;
+                states[i][j] = 0;
+                l.onload = () => {
+                    m.width = l.width;
+                    m.height = l.width;
+                    m.getContext('2d').drawImage(l, 0, (m.height - l.height) / 2);
+                };
+            }
+        }
+        var table = document.createElement('table');
+        table.style = 'border: 1px solid black';
+        for (var i in canvases) {
+            let tr = document.createElement('tr');
+            for (var j in canvases[i]) {
+                let td = document.createElement('td');
+                td.height = 200;
+                td.style = 'border: 1px solid black';
+                td.appendChild(canvases[i][j]);
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        document.body.appendChild(table);
+    </script>
+</body>
